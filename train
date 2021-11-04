@@ -163,10 +163,14 @@ def save_checkpoint(model, train_data, save_dir):
                 'hidden_layer_size': 512,
                 'dropout': 0.2,
                 'state_dict': model.state_dict(),
-                'class_to_idx': image_datasets['train'].class_to_idx,
-                 'epochs': 5,
-                'optimizer': optimizer.state_dict}
-torch.save(checkpoint, 'checkpoint.pth')
+                #in your proposal there was no classifier, I added it after receiving the error running predict.py
+                 'classifier': model.classifier,
+                #'class_to_idx': image_datasets['train'].class_to_idx,(this code did not work)
+                'class_to_idx': train_data.class_to_idx,
+                'epochs': 5,
+                #'optimizer': optimizer.state_dict
+                 }
+    torch.save(checkpoint, 'checkpoint.pth')
 def main():
     args = args_paser()
     data_dir = 'flowers'
